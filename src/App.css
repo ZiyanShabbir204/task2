@@ -1,0 +1,45 @@
+
+.todo-card{
+    margin-top: 10px;
+    /* border: 1px solid black; */
+    border-radius: 10px;
+    min-width: 100px;
+    box-shadow: 0 0 4px 1px rgba(0, 0, 0, 0.4);
+   
+    border-radius: 30px;
+    min-height: 67px;
+    align-content: center;
+
+
+}
+.card-item{
+    display: flex;
+    flex-direction: row;
+    justify-content: space-between;
+    padding: 0 15px;
+    align-items: center;
+
+}
+.card-actions{
+    display: flex;
+    flex-direction: row;
+    align-items: center;
+    width: 25%;
+    justify-content: space-evenly;
+    
+
+}
+.input-field{
+    height: 25px;
+    border-radius: 3px;
+    width: 75%;
+    padding: 0 7px;
+
+}
+.chng-btn{
+    background: green;
+    width: 100px;
+    height: 25px;
+    color: white;
+    border-radius: 10px;
+}
