@@ -23,7 +23,8 @@ const Todos = () => {
   console.log("todos",todoData)
   
 
-  return <div>Todos
+  return <div style={{margin:"15px"}}>
+    <h1 style={{textAlign:"center",color:"midnightblue"}}>Todos</h1>
     
     {todoData.map(todo => <Todo {...todo} key={todo.id}/>)}
 

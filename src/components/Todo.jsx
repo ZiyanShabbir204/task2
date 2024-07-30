@@ -1,8 +1,13 @@
 import React, { useState } from "react";
 import { useDispatch } from "react-redux";
 import { deleteTodo, editTodo } from "../store/slices/todoSlice";
-import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
-import { faTrash ,faPencil} from '@fortawesome/free-solid-svg-icons';
+import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
+import {
+  faTrash,
+  faPencil,
+  faCheckSquare as farCheckSquare,
+} from "@fortawesome/free-solid-svg-icons";
+import { faSquare } from '@fortawesome/free-regular-svg-icons';
 import "../App.css";
 
 const Todo = ({ id, title, completed }) => {
@@ -42,25 +47,45 @@ const Todo = ({ id, title, completed }) => {
             onChange={(e) => setTitleState(e.target.value)}
             className="input-field"
           />
-          <div style={{display:"flex", width:"25%", justifyContent:"center"}}>
-          <button onClick={changeHandler} className="chng-btn">Update</button>
-
+          <div
+            style={{ display: "flex", width: "25%", justifyContent: "center" }}
+          >
+            <button onClick={changeHandler} className="chng-btn">
+              Update
+            </button>
           </div>
-          
         </div>
       ) : (
         <div className="card-item">
-          <h2 style={{width:"75%"}}>{title}</h2>
-          <div className="card-actions" >
-          <FontAwesomeIcon icon={faTrash} onClick={deleteHandler} aria-hidden="true" />
-            
-            <FontAwesomeIcon icon={faPencil} onClick={editHandler} aria-hidden="true" />
-            <input
-            type="checkbox"
-            checked={check}
-            onChange={() => setCheck(!check)}
-          />
-            {/* {check ? <p>completed</p> : <p>incomplete</p>} */}
+          <h2 style={{ width: "75%" }}>{title}</h2>
+          <div className="card-actions">
+            <FontAwesomeIcon
+              icon={faTrash}
+              onClick={deleteHandler}
+              aria-hidden="true"
+            />
+
+            <FontAwesomeIcon
+              icon={faPencil}
+              onClick={editHandler}
+              aria-hidden="true"
+            />
+            {check ? (
+              <FontAwesomeIcon
+                icon={farCheckSquare}
+                onClick={() => setCheck(!check)}
+                aria-hidden="true"
+              />
+            ) : (
+              <FontAwesomeIcon
+              onClick={() => setCheck(!check)}
+                icon={faSquare}
+                
+                aria-hidden="true"
+                
+              />
+            )}
+           
           </div>
         </div>
       )}

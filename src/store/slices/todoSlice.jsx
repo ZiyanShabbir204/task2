@@ -24,10 +24,14 @@ const todoSlice  =  createSlice({
                     return todo
                 }
             })
+        },
+        deleteAll(state,action){
+            state.todos = []
+
         }
     }
     
 })
 
-export const {getTodo,addTodo,deleteTodo,editTodo} = todoSlice.actions
+export const {getTodo,addTodo,deleteTodo,editTodo,deleteAll} = todoSlice.actions
 export default todoSlice.reducer
