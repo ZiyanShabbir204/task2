@@ -26,7 +26,7 @@ const Todos = () => {
   return <div style={{margin:"15px"}}>
     <h1 style={{textAlign:"center",color:"midnightblue"}}>Todos</h1>
     
-    {todoData.map(todo => <Todo {...todo} key={todo.id}/>)}
+    {todoData.map(todo => <Todo {...todo} key={todo._id}/>)}
 
 
   </div>;

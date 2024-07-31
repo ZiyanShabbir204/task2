@@ -5,24 +5,33 @@ import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
 import { faCheckSquare } from "@fortawesome/free-solid-svg-icons";
 import { faSquare } from "@fortawesome/free-regular-svg-icons";
 import "../App.css";
+import { postTodo } from "../api/jsonApi";
+import { useNavigate } from "react-router-dom";
 
 const AddTodo = () => {
   const [title, setTitle] = useState("");
+  const [description,setDescription] = useState("")
   const [completed, setCompleted] = useState(false);
   const dispatch = useDispatch();
+  const navigate = useNavigate()
   const todo = useSelector((state) => state.todo.todos);
 
-  const submitHandler = (e) => {
+  const submitHandler = async (e) => {
     e.preventDefault();
     console.log("todo", todo);
     const payload = {
       id: (todo[todo.length - 1] ? todo[todo.length - 1].id : 0) + 1,
       title: title,
       completed: completed,
+      description:description
     };
-    dispatch(addTodo(payload));
+    const response  = await postTodo(payload)
+    // console.log("post todo ",response)
+    dispatch(addTodo(response));
     setTitle("");
+    setDescription("")
     setCompleted(false);
+    navigate("/")
   };
   return (
     <div className="form-div">
@@ -33,6 +42,13 @@ const AddTodo = () => {
           onChange={(e) => setTitle(e.target.value)}
           className="add-input"
           placeholder="Title"
+        />
+        <input
+          type="text"
+          value={description}
+          onChange={(e) => setDescription(e.target.value)}
+          className="add-input"
+          placeholder="Description"
         />
 
         <label

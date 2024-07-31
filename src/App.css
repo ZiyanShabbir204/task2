@@ -97,4 +97,32 @@ body{
     border: 1px solid;
     border-radius: 8px;
     box-shadow: 0 0 2px 1px rgba(0, 0, 0, 0.4);
+    
+}
+.info-box{
+    /* display: flex;
+    flex-direction: column;
+    justify-content: center;
+    align-items: center; */
+ 
+}
+.info-div{
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    min-width: 200px;
+    width: 25%;
+    background: bisque;
+
+    box-shadow: 0 0 4px 1px rgba(0, 0, 0, 0.4);
+    padding: 27px;
+}
+.back-btn{
+    width: 100px;
+    height: 25px;
+    border-radius: 6px;
+    border: 1px solid;
+    font-size: large;
+    background: darkred;
+    color: wheat;
 }

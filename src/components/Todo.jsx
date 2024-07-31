@@ -1,32 +1,50 @@
 import React, { useState } from "react";
 import { useDispatch } from "react-redux";
-import { deleteTodo, editTodo } from "../store/slices/todoSlice";
+import { deleteTodo, editTodo, setTodoKey } from "../store/slices/todoSlice";
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
 import {
   faTrash,
   faPencil,
   faCheckSquare as farCheckSquare,
+  faInfoCircle,
 } from "@fortawesome/free-solid-svg-icons";
-import { faSquare } from '@fortawesome/free-regular-svg-icons';
+import { faSquare } from "@fortawesome/free-regular-svg-icons";
 import "../App.css";
+import { deleteApi } from "../api/jsonApi";
+import { useNavigate } from "react-router-dom";
 
-const Todo = ({ id, title, completed }) => {
+const Todo = ({ _id, title, completed }) => {
   const [check, setCheck] = useState(completed);
   const [editField, setEditField] = useState(false);
   const [titleState, setTitleState] = useState();
   const dispatch = useDispatch();
 
-  const deleteHandler = () => {
-    dispatch(deleteTodo(id));
+  const navigate = useNavigate()
+
+  const deleteHandler = async () => {
+    try {
+      const response = await deleteApi(_id);
+      dispatch(deleteTodo(response._id));
+    } catch (error) {
+      console.log("error while delete a data", error);
+    }
   };
   const editHandler = () => {
-    setEditField(true);
-    setTitleState(title);
+    // dispatch(setTodoKey(_id))
+    navigate(`edit/${_id}`)
+    // setEditField(true);
+
+    // setTitleState(title);
+  };
+
+  const infoHandler = () => {
+    dispatch(setTodoKey(_id));
+    navigate(`info/${_id}`)
   };
   const changeHandler = () => {
     console.log("change handler");
     const payload = {
-      id: id,
+      _id: _id,
       title: titleState,
       completed: check,
     };
@@ -78,14 +96,16 @@ const Todo = ({ id, title, completed }) => {
               />
             ) : (
               <FontAwesomeIcon
-              onClick={() => setCheck(!check)}
+                onClick={() => setCheck(!check)}
                 icon={faSquare}
-                
                 aria-hidden="true"
-                
               />
             )}
-           
+            <FontAwesomeIcon
+              icon={faInfoCircle}
+              onClick={infoHandler}
+              aria-hidden="true"
+            />
           </div>
         </div>
       )}
