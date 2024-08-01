@@ -1,11 +1,13 @@
 import React, { useState } from "react";
 import { useDispatch, useSelector } from "react-redux";
-import { addTodo } from "../store/slices/todoSlice";
+import { addTodo } from "../../store/slices/todoSlice";
+
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
 import { faCheckSquare } from "@fortawesome/free-solid-svg-icons";
 import { faSquare } from "@fortawesome/free-regular-svg-icons";
-import "../App.css";
-import { postTodo } from "../api/jsonApi";
+import "../../App.css";
+import { postTodo } from "../../api/jsonApi";
+
 import { useNavigate } from "react-router-dom";
 
 const AddTodo = () => {
@@ -31,7 +33,7 @@ const AddTodo = () => {
     setTitle("");
     setDescription("")
     setCompleted(false);
-    navigate("/")
+    navigate("/todo")
   };
   return (
     <div className="form-div">

@@ -45,3 +45,12 @@ export const putApi = async (_id, payload) => {
     return error;
   }
 };
+
+export const deleteAllApi = async () => {
+  try {
+    const response = await axios.delete("/api/todo");
+    return response.data.todo.acknowledged;
+  } catch (error) {
+    return error;
+  }
+};

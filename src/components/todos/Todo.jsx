@@ -1,6 +1,7 @@
 import React, { useState } from "react";
 import { useDispatch } from "react-redux";
-import { deleteTodo, editTodo, setTodoKey } from "../store/slices/todoSlice";
+
+import { deleteTodo, editTodo, setTodoKey } from "../../store/slices/todoSlice";
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
 import {
   faTrash,
@@ -9,9 +10,10 @@ import {
   faInfoCircle,
 } from "@fortawesome/free-solid-svg-icons";
 import { faSquare } from "@fortawesome/free-regular-svg-icons";
-import "../App.css";
-import { deleteApi } from "../api/jsonApi";
+
+import { deleteApi } from "../../api/jsonApi";
 import { useNavigate } from "react-router-dom";
+import "../../App.css"
 
 const Todo = ({ _id, title, completed }) => {
   const [check, setCheck] = useState(completed);

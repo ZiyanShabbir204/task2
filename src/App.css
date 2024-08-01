@@ -50,7 +50,8 @@ body{
     flex-direction: column;
     justify-content: center;
     align-items: center;
-    height: 200px;
+    height: 400px;
+   
     gap: 30px;
     padding-top: 70px;
 }
@@ -85,9 +86,15 @@ body{
     align-items: center;
     background: bisque;
     /* padding: 0 30px; */
-    position: fixed;
+    /* position: fixed; */
     width: 100%;
 }
+.nav-link{
+    display: flex;
+    width: 20%;
+    justify-content: space-around;
+}
+
 .deleteAll-btn{
     width: 118px;
     height: 25px;
@@ -97,14 +104,14 @@ body{
     border: 1px solid;
     border-radius: 8px;
     box-shadow: 0 0 2px 1px rgba(0, 0, 0, 0.4);
+    background: burlywood;
     
 }
 .info-box{
-    /* display: flex;
-    flex-direction: column;
+    display: flex;
+    align-items: center;
     justify-content: center;
-    align-items: center; */
- 
+    height: 500px;
 }
 .info-div{
     display: flex;
@@ -116,6 +123,13 @@ body{
 
     box-shadow: 0 0 4px 1px rgba(0, 0, 0, 0.4);
     padding: 27px;
+}
+.info-action{
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    width: 80%;
+    gap: 20px;
 }
 .back-btn{
     width: 100px;

@@ -3,8 +3,9 @@ import { useDispatch, useSelector } from 'react-redux'
 import { faSquare } from "@fortawesome/free-regular-svg-icons";
 import { faCheckSquare } from "@fortawesome/free-solid-svg-icons";
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
-import { putApi } from '../api/jsonApi';
-import { editTodo } from '../store/slices/todoSlice';
+import { putApi } from '../../api/jsonApi';
+import { editTodo } from '../../store/slices/todoSlice';
+
 import { useNavigate, useParams } from 'react-router-dom';
 
 const EditTodo = () => {
