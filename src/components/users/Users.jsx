@@ -1,6 +1,7 @@
 
-import React, { useEffect } from "react";
+import React, { useEffect,useState } from "react";
 import { useDispatch, useSelector } from "react-redux";
+import DeleteModal from "../DeleteModal";
 
 import { useNavigate } from "react-router-dom";
 import { getAllUser,deleteAllUserApi } from "../../api/userApi";
@@ -9,8 +10,9 @@ import User from "./User";
 const Users = () => {
   const dispatch = useDispatch();
   const navigate = useNavigate();
-
+  const [visible,setVisible] = useState(false)
   const deleteHandler = async () => {
+    setVisible(false)
     try {
       const response = await deleteAllUserApi();
 
@@ -33,6 +35,7 @@ const Users = () => {
 
   return (
     <div style={{ margin: "15px" }}>
+     <DeleteModal  description= "Delete All" visible={visible} setVisible={setVisible} deleteHandler={deleteHandler}/>
       <div
         style={{
           display: "flex",
@@ -52,7 +55,7 @@ const Users = () => {
           <button
             className="deleteAll-btn"
             style={{ background: "#f12b2b" }}
-            onClick={deleteHandler}
+            onClick={()=> setVisible(true)}
           >
             {" "}
             Delete All

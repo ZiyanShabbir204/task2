@@ -85,15 +85,22 @@ body{
     justify-content: space-between;
     align-items: center;
     background: bisque;
-    /* padding: 0 30px; */
-    /* position: fixed; */
+    box-shadow: 0 0 6px 2px rgba(0, 0, 0, 0.5);
+    height: 70px;
     width: 100%;
 }
-.nav-link{
+.nav-link-wrapper{
     display: flex;
     width: 20%;
     justify-content: space-around;
 }
+.nav-links{
+    text-decoration: none;
+    color: black;
+    font-size: x-large;
+    font-weight: bold;
+}
+
 
 .deleteAll-btn{
     width: 118px;
@@ -139,4 +146,40 @@ body{
     font-size: large;
     background: darkred;
     color: wheat;
+}
+.modal{
+  
+    text-align: center ;
+    align-content: center ;
+    height: 100%;
+    border-radius: 10px;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    justify-content: space-evenly;
+    gap: 45px;
+}
+.close-btn{
+    width: 100px;
+    height: 30px;
+    border-radius: 15px;
+    background: firebrick;
+    color: white;
+}
+.modal-status{
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    gap: 11px;
+    
+ 
+}
+.close-icon{
+    color: red;
+    display: flex;
+    justify-content: flex-end  ;
+    margin-top: 5px;
+    /* margin-right: -4px; */
+    margin-left: -3px;
+    width: 99%;
 }

@@ -19,10 +19,10 @@ const Navbar = () => {
   };
   return (
     <div className="navbar">
-      <h2>DashBoard</h2>
-      <div className="nav-link">
-        <Link to="/todo">Todos</Link>
-        <Link to="/user">Users</Link>
+      <h1 style={{marginLeft:"25px"}}>DashBoard</h1>
+      <div className="nav-link-wrapper">
+        <Link to="/todo" className="nav-links" >Todos</Link>
+        <Link to="/user"  className="nav-links">Users</Link>
         {/* <button className='deleteAll-btn' onClick={()=> navigate("add")}> Add Todo</button>
         <button className='deleteAll-btn' onClick={deleteHandler}> Delete All</button> */}
       </div>

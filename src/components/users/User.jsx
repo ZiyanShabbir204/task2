@@ -14,16 +14,21 @@ import { faSquare } from "@fortawesome/free-regular-svg-icons";
 import { useNavigate } from "react-router-dom";
 import "../../App.css"
 import { deleteUserApi } from "../../api/userApi";
+import DeleteModal from "../DeleteModal";
 
 const User = ({ _id, name, email, username }) => {
 
   const [editField, setEditField] = useState(false);
   const [nameState, setNameState] = useState();
+  const [visible,setVisible] = useState(false)
   const dispatch = useDispatch();
 
   const navigate = useNavigate()
 
+  
+
   const deleteHandler = async () => {
+    setVisible(false)
     try {
       const response = await deleteUserApi(_id);
       dispatch(deleteUser(response._id));
@@ -58,6 +63,7 @@ const User = ({ _id, name, email, username }) => {
 
   return (
     <div className="todo-card">
+      <DeleteModal visible={visible} setVisible={setVisible} description={name} deleteHandler={deleteHandler}/>
       {editField ? (
         <div className="card-item">
           {" "}
@@ -81,7 +87,8 @@ const User = ({ _id, name, email, username }) => {
           <div className="card-actions">
             <FontAwesomeIcon
               icon={faTrash}
-              onClick={deleteHandler}
+              // onClick={deleteHandler}
+              onClick={()=> setVisible(true)}
               aria-hidden="true"
             />
 

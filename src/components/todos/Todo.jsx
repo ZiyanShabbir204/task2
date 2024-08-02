@@ -1,5 +1,6 @@
 import React, { useState } from "react";
 import { useDispatch } from "react-redux";
+import DeleteModal from "../DeleteModal";
 
 import { deleteTodo, editTodo, setTodoKey } from "../../store/slices/todoSlice";
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
@@ -19,11 +20,13 @@ const Todo = ({ _id, title, completed }) => {
   const [check, setCheck] = useState(completed);
   const [editField, setEditField] = useState(false);
   const [titleState, setTitleState] = useState();
+  const [visible,setVisible] = useState(false)
   const dispatch = useDispatch();
 
   const navigate = useNavigate()
 
   const deleteHandler = async () => {
+    setVisible(true)
     try {
       const response = await deleteApi(_id);
       dispatch(deleteTodo(response._id));
@@ -58,6 +61,7 @@ const Todo = ({ _id, title, completed }) => {
 
   return (
     <div className="todo-card">
+      <DeleteModal visible={visible} setVisible={setVisible} description={title} deleteHandler={deleteHandler}/>
       {editField ? (
         <div className="card-item">
           {" "}
@@ -81,7 +85,7 @@ const Todo = ({ _id, title, completed }) => {
           <div className="card-actions">
             <FontAwesomeIcon
               icon={faTrash}
-              onClick={deleteHandler}
+              onClick={()=> setVisible(true)}
               aria-hidden="true"
             />
 

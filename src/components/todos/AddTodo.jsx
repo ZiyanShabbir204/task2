@@ -1,6 +1,7 @@
-import React, { useState } from "react";
+import React, { useState,useEffect } from "react";
 import { useDispatch, useSelector } from "react-redux";
 import { addTodo } from "../../store/slices/todoSlice";
+import CustomModal from "../CustomModal";
 
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
 import { faCheckSquare } from "@fortawesome/free-solid-svg-icons";
@@ -14,6 +15,11 @@ const AddTodo = () => {
   const [title, setTitle] = useState("");
   const [description,setDescription] = useState("")
   const [completed, setCompleted] = useState(false);
+  const [modalText, setModalText] = useState({
+    description:"",
+    success:true
+  });
+  const [visible, setVisible] = useState(false);
   const dispatch = useDispatch();
   const navigate = useNavigate()
   const todo = useSelector((state) => state.todo.todos);
@@ -21,6 +27,11 @@ const AddTodo = () => {
   const submitHandler = async (e) => {
     e.preventDefault();
     console.log("todo", todo);
+    if (!title || !description) {
+      setModalText({description: "Invalid Fields",success:false});
+      setVisible(true);
+      return;
+    }
     const payload = {
       id: (todo[todo.length - 1] ? todo[todo.length - 1].id : 0) + 1,
       title: title,
@@ -30,13 +41,22 @@ const AddTodo = () => {
     const response  = await postTodo(payload)
     // console.log("post todo ",response)
     dispatch(addTodo(response));
-    setTitle("");
-    setDescription("")
-    setCompleted(false);
-    navigate("/todo")
+    setModalText({description: "Todo Added",success:true});
+    setVisible(true);
+
+  
   };
+  useEffect(()=> {
+    if (title  && description) {
+       
+      setTitle("");
+      setDescription("")
+      setCompleted(false);
+       }
+   },[visible])
   return (
     <div className="form-div">
+      <CustomModal value = {modalText} visible={visible} setVisible={setVisible} component = "Todo" />                   
       <form className="form-class">
         <input
           type="text"

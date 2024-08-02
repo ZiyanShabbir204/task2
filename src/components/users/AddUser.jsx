@@ -1,45 +1,78 @@
-import React, { useState } from "react";
+import React, { useEffect, useState } from "react";
 import { useDispatch, useSelector } from "react-redux";
 import { postApiUser } from "../../api/userApi";
 import { addUser } from "../../store/slices/userSlice";
 
-import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
 import { faCheckSquare } from "@fortawesome/free-solid-svg-icons";
-import { faSquare } from "@fortawesome/free-regular-svg-icons";
+
+import { faCheck } from "@fortawesome/free-solid-svg-icons";
 import "../../App.css";
 
-
 import { useNavigate } from "react-router-dom";
+import CustomModal from "../CustomModal";
 
 const AddUser = () => {
   const [name, setName] = useState("");
-  const [username,setUsername] = useState("")
-  const [email,setEmail] = useState("")
+  const [username, setUsername] = useState("");
+  const [email, setEmail] = useState("");
+  const [modalText, setModalText] = useState({
+    description:"",
+    success:true
+  });
+  const [visible, setVisible] = useState(false);
 
   const dispatch = useDispatch();
-  const navigate = useNavigate()
+  const navigate = useNavigate();
   const user = useSelector((state) => state.user.users);
 
   const submitHandler = async (e) => {
     e.preventDefault();
     console.log("user", user);
-    
+    if (!name || !email || !username) {
+      setModalText({description: "Invalid Fields",success:false});
+      setVisible(true);
+      return;
+    }
+
     const payload = {
       id: (user[user.length - 1] ? user[user.length - 1].id : 0) + 1,
       name: name,
       email: email,
-      username:username
+      username: username,
     };
-    const response  = await postApiUser(payload)
+    const response = await postApiUser(payload);
     // console.log("post user ",response)
     dispatch(addUser(response));
-    setName("");
-    setUsername("")
-    setEmail("")
-       navigate("/user")
+    setModalText({description: "User Added",success:true});
+
+    setVisible(true);
+
   };
+
+  useEffect(()=> {
+   if (username && name && email) {
+      
+      setName("");
+      setUsername("");
+      setEmail("");
+      }
+  },[visible])
+
+
+  // const closeModal = () => {
+  //   setVisible(false);
+
+  //   if (username && name && email) {
+  //     navigate("/user");
+  //     setName("");
+  //     setUsername("");
+  //     setEmail("");
+  //   }
+  // };
   return (
     <div className="form-div">
+      <CustomModal value = {modalText} visible={visible} setVisible={setVisible} component = "User"/>
+   
       <form className="form-class">
         <input
           type="text"
@@ -63,11 +96,9 @@ const AddUser = () => {
           placeholder="email"
         />
 
-
-       
-        
-    
-        <button onClick={submitHandler} className="add-btn">Add</button>
+        <button onClick={submitHandler} className="add-btn">
+          Add
+        </button>
       </form>
     </div>
   );
