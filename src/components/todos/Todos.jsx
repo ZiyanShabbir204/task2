@@ -1,11 +1,12 @@
 import React, { useEffect,useState } from "react";
 import { useDispatch, useSelector } from "react-redux";
-import { getTodo,deleteAll } from "../../store/slices/todoSlice";
+import { getTodo,deleteAll,setLoader } from "../../store/slices/todoSlice";
 import axios from "axios";
 import Todo from "./Todo";
 import { todos,deleteApi, deleteAllApi } from "../../api/jsonApi";
 import { useNavigate } from "react-router-dom";
 import DeleteModal from "../DeleteModal";
+import Spinner from "../Spinner";
 
 const Todos = () => {
   const dispatch = useDispatch();
@@ -25,6 +26,7 @@ const Todos = () => {
   const dataHandler = async () => {
     const todo = await todos();
     dispatch(getTodo(todo));
+    dispatch(setLoader(false))
   };
 
   useEffect(() => {
@@ -32,14 +34,15 @@ const Todos = () => {
   }, []);
 
   const todoData = useSelector((state) => state.todo.todos);
+  const loader = useSelector((state)=> state.todo.loader)
   console.log("todos", todoData);
 
   return (
     <div style={{ margin: "15px" }}>
       <DeleteModal  description= "Delete All" visible={visible} setVisible={setVisible} deleteHandler={deleteHandler}/>
-      <div style={{display:"flex",justifyContent:"space-between",alignItems:"center"}}>
+      <div  className="topbar">
         <h1 style={{ textAlign: "center", color: "midnightblue" }}>Todos</h1>
-        <div style={{display:"flex",gap:"40px"}}>
+        <div className="topbar-content" >
         <button className="deleteAll-btn" onClick={() => navigate("/todo/add")}>
           {" "}
           Add Todo
@@ -53,10 +56,11 @@ const Todos = () => {
        
 
       </div>
-
-      {todoData.map((todo) => (
+      {loader? <Spinner/> : todoData.map((todo) => (
         <Todo {...todo} key={todo._id} />
       ))}
+
+      
     </div>
   );
 };

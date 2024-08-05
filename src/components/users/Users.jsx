@@ -1,18 +1,18 @@
-
-import React, { useEffect,useState } from "react";
+import React, { useEffect, useState } from "react";
 import { useDispatch, useSelector } from "react-redux";
 import DeleteModal from "../DeleteModal";
 
 import { useNavigate } from "react-router-dom";
-import { getAllUser,deleteAllUserApi } from "../../api/userApi";
-import { deleteAllUser, getUser } from "../../store/slices/userSlice";
+import { getAllUser, deleteAllUserApi } from "../../api/userApi";
+import { deleteAllUser, getUser, setLoader } from "../../store/slices/userSlice";
 import User from "./User";
+import Spinner from "../Spinner";
 const Users = () => {
   const dispatch = useDispatch();
   const navigate = useNavigate();
-  const [visible,setVisible] = useState(false)
+  const [visible, setVisible] = useState(false);
   const deleteHandler = async () => {
-    setVisible(false)
+    setVisible(false);
     try {
       const response = await deleteAllUserApi();
 
@@ -24,6 +24,7 @@ const Users = () => {
   const dataHandler = async () => {
     const user = await getAllUser();
     dispatch(getUser(user));
+    dispatch(setLoader(false))
   };
 
   useEffect(() => {
@@ -31,20 +32,22 @@ const Users = () => {
   }, []);
 
   const userData = useSelector((state) => state.user.users);
+  const loader = useSelector((state) => state.user.loader);
   console.log("users", userData);
 
   return (
     <div style={{ margin: "15px" }}>
-     <DeleteModal  description= "Delete All" visible={visible} setVisible={setVisible} deleteHandler={deleteHandler}/>
+      <DeleteModal
+        description="Delete All"
+        visible={visible}
+        setVisible={setVisible}
+        deleteHandler={deleteHandler}
+      />
       <div
-        style={{
-          display: "flex",
-          justifyContent: "space-between",
-          alignItems: "center",
-        }}
+        className="topbar"
       >
         <h1 style={{ textAlign: "center", color: "midnightblue" }}>Users</h1>
-        <div style={{ display: "flex", gap: "40px" }}>
+        <div className="topbar-content" >
           <button
             className="deleteAll-btn"
             onClick={() => navigate("/user/add")}
@@ -55,17 +58,20 @@ const Users = () => {
           <button
             className="deleteAll-btn"
             style={{ background: "#f12b2b" }}
-            onClick={()=> setVisible(true)}
+            onClick={() => setVisible(true)}
           >
             {" "}
             Delete All
           </button>
         </div>
       </div>
+      {loader ? (
+        <Spinner />
+      ) : (
+        userData.map((user) => <User {...user} key={user._id} />)
+      )}
 
-      {userData.map((user) => (
-        <User {...user} key={user._id} />
-      ))}
+     
     </div>
   );
 };
