@@ -15,13 +15,19 @@ import EditTodo from "./components/todos/EditTodo";
 import NavbarWrapper from "./components/NavbarWrapper";
 import EditUser from "./components/users/EditUser";
 import InfoUser from "./components/users/InfoUser";
+import Signup from "./components/admin/Signup.jsx";
+import Login from "./components/admin/Login.jsx";
 
 
 
 function App() {
   const router = createBrowserRouter([
     {
-      path:"/",
+      path : "/",
+      element: <Login/>
+    },
+    {
+      path:"/navbar",
       element: <NavbarWrapper/>,
       children : [
         {
