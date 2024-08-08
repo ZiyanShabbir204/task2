@@ -1,4 +1,4 @@
-import { useState } from "react";
+import { useEffect, useState } from "react";
 
 import Todos from "./components/todos/Todos";
 import Users from "./components/users/Users";
@@ -21,18 +21,31 @@ import Login from "./components/admin/Login.jsx";
 
 
 function App() {
+  const [token,setToken] = useState("")
+  useEffect(()=>{
+    setToken(localStorage.getItem("token"))
+  })
+
+  // const token = 
+  
+ 
   const router = createBrowserRouter([
+   
     {
-      path : "/",
-      element: <Login/>
-    },
-    {
-      path:"/navbar",
+      path:"/",
       element: <NavbarWrapper/>,
       children : [
         {
+          path : "login",
+          element: <Login/>
+        },
+        {
+          path : "/signup",
+          element: <Signup/>
+        },
+        {
           path:"todo",
-          element: <Todos/>,
+          element:  token?<Todos/> : <Login />
 
         },
         {

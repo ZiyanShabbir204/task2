@@ -23,8 +23,18 @@ const Users = () => {
   };
   const dataHandler = async () => {
     const user = await getAllUser();
-    dispatch(getUser(user));
-    dispatch(setLoader(false))
+    if(user.error){
+      dispatch(getUser([]))
+
+    }
+    else{
+      dispatch(getUser(user));
+      dispatch(setLoader(false))
+
+    }
+
+    
+   
   };
 
   useEffect(() => {
