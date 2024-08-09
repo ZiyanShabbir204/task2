@@ -2,10 +2,13 @@
 import React, { useRef } from "react";
 import { login } from "../../api/adminApi";
 import { useNavigate } from "react-router-dom";
+import { useDispatch } from "react-redux";
+import { setToken } from "../../store/slices/adminSlice";
 const Login = () => {
     const email = useRef();
     const password = useRef();
     const navigate = useNavigate()
+    const dispatch = useDispatch()
     const submitHandler = async (e) => {
         e.preventDefault();
 
@@ -24,6 +27,7 @@ const Login = () => {
             throw "incorrect email or password"
           }
            localStorage.setItem("token", response.token);
+           dispatch(setToken(localStorage.getItem("token")))
 
           console.log("login Response", response);
           email.current.value = "";

@@ -1,12 +1,8 @@
-import axios from "axios";
+import { apiInstance } from "./config";
 
 export const todos = async () => {
   try {
-    const token =  localStorage.getItem("token")
-    const config = {
-      headers: { Authorization: `bearer ${token}` }
-    };
-    const response = await axios.get("/api/todo",config);
+    const response = await apiInstance.get("/todo");
     // console.log("insideapi",response)
     return response.data.todos;
   } catch (error) {
@@ -16,11 +12,7 @@ export const todos = async () => {
 
 export const getTodo = async (_id) => {
   try {
-    const token =  localStorage.getItem("token")
-    const config = {
-      headers: { Authorization: `bearer ${token}` }
-    };
-    const response = await axios.get(`/api/todo/${_id}`,config);
+    const response = await apiInstance.get(`/todo/${_id}`);
     return response.data.todo;
   } catch (error) {
     return error;
@@ -29,11 +21,7 @@ export const getTodo = async (_id) => {
 
 export const postTodo = async (payload) => {
   try {
-    const token =  localStorage.getItem("token")
-    const config = {
-      headers: { Authorization: `bearer ${token}` }
-    };
-    const response = await axios.post("/api/todo", payload,config);
+    const response = await apiInstance.post("/todo", payload);
     return response.data.newTodo;
   } catch (error) {
     return error;
@@ -42,11 +30,7 @@ export const postTodo = async (payload) => {
 
 export const deleteApi = async (_id) => {
   try {
-    const token =  localStorage.getItem("token")
-    const config = {
-      headers: { Authorization: `bearer ${token}` }
-    };
-    const response = await axios.delete(`/api/todo/${_id}`,config);
+    const response = await apiInstance.delete(`/todo/${_id}`);
     return response.data.todo;
   } catch (error) {
     return error;
@@ -55,11 +39,7 @@ export const deleteApi = async (_id) => {
 
 export const putApi = async (_id, payload) => {
   try {
-    const token =  localStorage.getItem("token")
-    const config = {
-      headers: { Authorization: `bearer ${token}` }
-    };
-    const response = await axios.put(`/api/todo/${_id}`, payload,config);
+    const response = await apiInstance.put(`/todo/${_id}`, payload);
     return response.data.todo;
   } catch (error) {
     return error;
@@ -68,11 +48,7 @@ export const putApi = async (_id, payload) => {
 
 export const deleteAllApi = async () => {
   try {
-    const token =  localStorage.getItem("token")
-    const config = {
-      headers: { Authorization: `bearer ${token}` }
-    };
-    const response = await axios.delete("/api/todo",config);
+    const response = await apiInstance.delete("/todo");
     return response.data.todo.acknowledged;
   } catch (error) {
     return error;

@@ -228,9 +228,15 @@ body{
     gap: 40px;
     flex-wrap: wrap;
 }
+.logout-btn{
+    margin-right: 7px;
+}
 
 @media screen and (max-width : 550px ){
     .nav-link-wrapper {
+        display: none;
+    }
+    .logout-btn{
         display: none;
     }
     .nav-btn{
