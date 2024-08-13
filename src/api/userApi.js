@@ -1,54 +1,55 @@
 import { apiInstance } from "./config";
 
-export const getAllUser = async () => {
+export const getAllUser = async (token) => {
   try {
-    const response = await apiInstance.get("/user");
-    return response.data.users;
+    const response = await apiInstance(token).get("/users");
+    
+    return response.data;
   } catch (error) {
-    return { error: error };
+    return error.response.data;
   }
 };
 
-export const getApiUser = async (_id) => {
+export const getApiUser = async (token,_id) => {
   try {
-    const response = await apiInstance.get(`/user/${_id}`);
-    return response.data.user;
-  } catch (error) {
-    return error;
-  }
-};
-
-export const postApiUser = async (payload) => {
-  try {
-    const response = await apiInstance.post("/user", payload);
-    return response.data.user;
+    const response = await apiInstance(token).get(`/users/${_id}`);
+    return response.data.data;
   } catch (error) {
     return error;
   }
 };
 
-export const deleteUserApi = async (_id) => {
+export const postApiUser = async (token,payload) => {
   try {
-    const response = await apiInstance.delete(`/user/${_id}`);
-    return response.data.user;
+    const response = await apiInstance(token).post("/users", payload);
+    return response.data.data;
   } catch (error) {
     return error;
   }
 };
 
-export const putUserApi = async (_id, payload) => {
+export const deleteUserApi = async (token,_id) => {
   try {
-    const response = await apiInstance.put(`/user/${_id}`, payload);
-    return response.data.user;
+    const response = await apiInstance(token).delete(`/users/${_id}`);
+    return response.data.data;
   } catch (error) {
     return error;
   }
 };
 
-export const deleteAllUserApi = async () => {
+export const putUserApi = async (token,_id, payload) => {
   try {
-    const response = await apiInstance.delete("/user");
-    return response.data.user.acknowledged;
+    const response = await apiInstance(token).put(`/users/${_id}`, payload);
+    return response.data.data;
+  } catch (error) {
+    return error;
+  }
+};
+
+export const deleteAllUserApi = async (token) => {
+  try {
+    const response = await apiInstance(token).delete("/users");
+    return response.data.data.acknowledged;
   } catch (error) {
     return error;
   }

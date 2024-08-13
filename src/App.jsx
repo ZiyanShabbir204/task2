@@ -17,15 +17,14 @@ import EditUser from "./components/users/EditUser";
 import InfoUser from "./components/users/InfoUser";
 import Signup from "./components/admin/Signup.jsx";
 import Login from "./components/admin/Login.jsx";
+import { Navigate } from "react-router-dom";
+import NotFound from "./components/NotFound.jsx";
 import { useDispatch, useSelector } from "react-redux";
 import { setToken } from "./store/slices/adminSlice.jsx";
 
 function App() {
-  // const dispatch = useDispatch()
-  // useEffect(()=>{
-  //   dispatch(setToken(localStorage.getItem("token")))
+  // const token = localStorage.getItem("token")
 
-  // },[])
   const token = useSelector((state) => state.admin.token);
 
   // const token =
@@ -35,6 +34,10 @@ function App() {
       element: <NavbarWrapper />,
       children: [
         {
+          path: "/",
+          element: <Navigate to="login" />,  
+        },
+        {
           path: "login",
           element: <Login />,
         },
@@ -42,6 +45,10 @@ function App() {
           path: "signup",
           element: <Signup />,
         },
+        {
+          path:"*",
+          element:<NotFound/>
+        }
       ],
     },
   ]);
@@ -49,7 +56,7 @@ function App() {
   const router = createBrowserRouter([
     {
       path: "/",
-      element: <NavbarWrapper />,
+      element: <NavbarWrapper p={token} />,
       children: [
         // {
         //   path : "login",
@@ -58,6 +65,10 @@ function App() {
         // {
         //   path : "/signup",
         //   element: <Signup/>
+        // },
+        // {
+        //   path: "/",
+        //   element: <Navigate to="login" />,  // Redirect from / to /login
         // },
         {
           path: "todo",
@@ -96,7 +107,12 @@ function App() {
     },
   ]);
 
-  return <RouterProvider router={token ? router : adminRouter} />;
+  return (
+    <>
+      {console.log(token, "token????????????")}
+      <RouterProvider router={token ? router : adminRouter} />
+    </>
+  );
 }
 
 export default App;

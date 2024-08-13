@@ -11,6 +11,9 @@ const Users = () => {
   const dispatch = useDispatch();
   const navigate = useNavigate();
   const [visible, setVisible] = useState(false);
+  const userData = useSelector((state) => state.user.users);
+  const loader = useSelector((state) => state.user.loader);
+  const token = useSelector((state) => state.admin.token)
   const deleteHandler = async () => {
     setVisible(false);
     try {
@@ -22,14 +25,17 @@ const Users = () => {
     } catch (error) {}
   };
   const dataHandler = async () => {
-    const user = await getAllUser();
-    if(user.error){
-      dispatch(getUser([]))
+    const user = await getAllUser(token);
+    console.log(user,'user!!!!!!!!!!!');
+    
+    if(user.success){
+      dispatch(getUser(user.data));
+      dispatch(setLoader(false))
 
     }
     else{
-      dispatch(getUser(user));
-      dispatch(setLoader(false))
+      dispatch(getUser([]));
+      
 
     }
 
@@ -41,8 +47,7 @@ const Users = () => {
     dataHandler();
   }, []);
 
-  const userData = useSelector((state) => state.user.users);
-  const loader = useSelector((state) => state.user.loader);
+ 
   console.log("users", userData);
 
   return (

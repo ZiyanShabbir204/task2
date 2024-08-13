@@ -19,6 +19,8 @@ const EditUser = () => {
     const [name, setName] = useState(user.name);
     const [username,setUsername] = useState(user.username)
     const [email, setEmail] = useState(user.email);
+    const token = useSelector((state) => state.admin.token )
+
 
     const submitHandler = async (e) => {
         e.preventDefault();
@@ -30,7 +32,7 @@ const EditUser = () => {
           username:username
         };
         console.log("payload",payload)
-        const response = await putUserApi(params._id,payload)
+        const response = await putUserApi(token,params._id,payload)
         console.log("response",response)
         dispatch(editUser(response))
         navigate("/user")

@@ -16,6 +16,7 @@ const EditTodo = () => {
     const params  = useParams()
 
     const todo = data.todos.find((todo)=> todo._id == params._id)
+    const token = useSelector((state) => state.admin.token )
     const [title, setTitle] = useState(todo.title);
     const [description,setDescription] = useState(todo.description)
     const [completed, setCompleted] = useState(todo.completed);
@@ -30,7 +31,7 @@ const EditTodo = () => {
           description:description
         };
         console.log("payload",payload)
-        const response = await putApi(params._id,payload)
+        const response = await putApi(token,params._id,payload)
         console.log("response",response)
         dispatch(editTodo(response))
         navigate("/todo")

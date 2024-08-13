@@ -1,4 +1,5 @@
 import React, { useEffect, useState } from "react";
+import { useSelector } from "react-redux";
 
 import { useNavigate, useParams } from "react-router-dom";
 import { getApiUser } from "../../api/userApi";
@@ -7,9 +8,11 @@ const InfoUser = () => {
   const [data, setData] = useState("");
   const params = useParams();
   const navigate = useNavigate();
+  const token = useSelector((state) => state.admin.token )
+
 
   const dataHandling = async () => {
-    const response = await getApiUser(params._id);
+    const response = await getApiUser(token,params._id);
     setData(response);
   };
   useEffect(() => {

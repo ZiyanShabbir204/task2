@@ -1,6 +1,8 @@
 import React, { useRef } from "react";
 import { signup } from "../../api/adminApi";
 import { useNavigate } from "react-router-dom";
+import { useDispatch } from "react-redux";
+import { setHeading, setToken } from "../../store/slices/adminSlice";
 
 const Signup = () => {
   const fullname = useRef();
@@ -8,10 +10,16 @@ const Signup = () => {
   const password = useRef();
   const confirmPassword = useRef();
   const navigate = useNavigate();
+  const dispatch = useDispatch()
 
   const submitHandler = async (e) => {
     e.preventDefault();
-    if (!fullname.current.value || !email.current.value || !password.current.value || !confirmPassword.current.value) {
+    if (
+      !fullname.current.value ||
+      !email.current.value ||
+      !password.current.value ||
+      !confirmPassword.current.value
+    ) {
       alert("invalid fields");
       return;
     }
@@ -28,35 +36,53 @@ const Signup = () => {
     };
     try {
       const response = await signup(payload);
-      if(response.error){
-        console.log("response error",response.error)
-        throw response.error
+      if (response.error) {
+        console.log("response error", response.error);
+        throw response.error;
       }
       console.log("signup Response", response);
+      alert(response.message);
       fullname.current.value = "";
       email.current.value = "";
       password.current.value = "";
       confirmPassword.current.value = "";
-    
-        navigate("/login");
-    
+      dispatch(setHeading("Login"))
+      
+
+      navigate("/login");
     } catch (error) {
       alert(error);
     }
   };
-  return (
-    <div>
-      <form onSubmit={submitHandler}>
-        <input type="text" ref={fullname} placeholder="Fullname" />
-        <input type="email" ref={email} placeholder="Email" />
-        <input type="password" ref={password} placeholder="Password" />
-        <input
-          type="password"
-          ref={confirmPassword}
-          placeholder="Confirm Password"
-        />
+  const textHandler = ()=>{
+    dispatch(setHeading("Login"))
+    navigate("/login")
 
-        <button type="submit">Sign Up</button>
+  }
+  return (
+    <div className="form-div">
+      <form onSubmit={submitHandler} className="login-form" >
+       
+          <input type="text" ref={fullname} placeholder="Fullname"  className="login-input-field"/>
+          <input type="email" ref={email} placeholder="Email" className="login-input-field"/>
+          <input type="password" ref={password} placeholder="Password" className="login-input-field" />
+          <div className="form-item" >
+          <input
+            type="password"
+            ref={confirmPassword}
+            placeholder="Confirm Password"
+            className="login-input-field"
+          />
+          <div style={{display:"flex",fontSize:"x-small",gap:"3px"}}>
+            <p> Already have an account?</p>
+            <p className="form-text" onClick={textHandler}> Login</p>
+          </div>
+       
+        </div>
+
+        <button type="submit" className="login-btn">
+          Sign Up
+        </button>
       </form>
     </div>
   );

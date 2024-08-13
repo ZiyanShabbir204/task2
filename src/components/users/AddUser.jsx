@@ -15,6 +15,8 @@ const AddUser = () => {
   const [name, setName] = useState("");
   const [username, setUsername] = useState("");
   const [email, setEmail] = useState("");
+  const token = useSelector((state) => state.admin.token )
+
   const [modalText, setModalText] = useState({
     description:"",
     success:true
@@ -40,7 +42,7 @@ const AddUser = () => {
       email: email,
       username: username,
     };
-    const response = await postApiUser(payload);
+    const response = await postApiUser(token,payload);
     // console.log("post user ",response)
     dispatch(addUser(response));
     setModalText({description: "User Added",success:true});

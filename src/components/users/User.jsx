@@ -2,6 +2,7 @@ import React, { useState } from "react";
 import { useDispatch } from "react-redux";
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
 import { deleteUser } from "../../store/slices/userSlice";
+import { useSelector } from "react-redux";
 
 import {
   faTrash,
@@ -22,6 +23,8 @@ const User = ({ _id, name, email, username }) => {
   const [nameState, setNameState] = useState();
   const [visible,setVisible] = useState(false)
   const dispatch = useDispatch();
+  const token = useSelector((state) => state.admin.token )
+
 
   const navigate = useNavigate()
 
@@ -30,7 +33,7 @@ const User = ({ _id, name, email, username }) => {
   const deleteHandler = async () => {
     setVisible(false)
     try {
-      const response = await deleteUserApi(_id);
+      const response = await deleteUserApi(token,_id);
       dispatch(deleteUser(response._id));
     } catch (error) {
       console.log("error while delete a data", error);

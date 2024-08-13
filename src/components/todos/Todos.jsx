@@ -12,11 +12,14 @@ const Todos = () => {
   const dispatch = useDispatch();
   const navigate = useNavigate()
   const [visible,setVisible] = useState(false)
+  const todoData = useSelector((state) => state.todo.todos);
+  const loader = useSelector((state)=> state.todo.loader)
+  const token = useSelector((state)=> state.admin.token)
 
     const deleteHandler = async () => {
       setVisible(false)
       try {
-        const response = await deleteAllApi();
+        const response = await deleteAllApi(token);
     
         if (response) {
           dispatch(deleteAll());
@@ -24,21 +27,31 @@ const Todos = () => {
       } catch (error) {}
     };
   const dataHandler = async () => {
-    const todo = await todos();
-    dispatch(getTodo(todo));
-    dispatch(setLoader(false))
+    const todo = await todos(token);
+    console.log("todo in datahandler",todo)
+    if(todo.success){
+      dispatch(getTodo(todo.data));
+        dispatch(setLoader(false))
+
+    }
+    else{
+      dispatch(getTodo([]));
+
+    }
+
+   
   };
 
   useEffect(() => {
     dataHandler();
   }, []);
 
-  const todoData = useSelector((state) => state.todo.todos);
-  const loader = useSelector((state)=> state.todo.loader)
-  console.log("todos", todoData);
-
+ 
+  
   return (
     <div style={{ margin: "15px" }}>
+      {/* {console.log("loader!!!!!!!!!!1", loader)}
+      {console.log("todos!!!!!!!!!!!", todoData)} */}
       <DeleteModal  description= "Delete All" visible={visible} setVisible={setVisible} deleteHandler={deleteHandler}/>
       <div  className="topbar">
         <h1 style={{ textAlign: "center", color: "midnightblue" }}>Todos</h1>

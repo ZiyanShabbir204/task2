@@ -12,9 +12,10 @@ const InfoTodo = () => {
   const _id = useSelector((state) => state.todo.todoKey);
   const params = useParams();
   const navigate = useNavigate();
+  const token = useSelector((state) => state.admin.token )
 
   const dataHandling = async () => {
-    const response = await getTodo(params._id);
+    const response = await getTodo(token,params._id);
     setData(response);
   };
   useEffect(() => {

@@ -23,6 +23,7 @@ const AddTodo = () => {
   const dispatch = useDispatch();
   const navigate = useNavigate()
   const todo = useSelector((state) => state.todo.todos);
+  const token = useSelector((state) => state.admin.token )
 
   const submitHandler = async (e) => {
     e.preventDefault();
@@ -38,7 +39,7 @@ const AddTodo = () => {
       completed: completed,
       description:description
     };
-    const response  = await postTodo(payload)
+    const response  = await postTodo(token,payload)
     // console.log("post todo ",response)
     dispatch(addTodo(response));
     setModalText({description: "Todo Added",success:true});

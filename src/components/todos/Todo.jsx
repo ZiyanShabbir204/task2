@@ -1,5 +1,5 @@
 import React, { useState } from "react";
-import { useDispatch } from "react-redux";
+import { useDispatch, useSelector } from "react-redux";
 import DeleteModal from "../DeleteModal";
 
 import { deleteTodo, editTodo, setTodoKey } from "../../store/slices/todoSlice";
@@ -21,6 +21,7 @@ const Todo = ({ _id, title, completed }) => {
   const [editField, setEditField] = useState(false);
   const [titleState, setTitleState] = useState();
   const [visible,setVisible] = useState(false)
+  const token = useSelector((state)=> state.admin.token)
   const dispatch = useDispatch();
 
   const navigate = useNavigate()
@@ -28,7 +29,7 @@ const Todo = ({ _id, title, completed }) => {
   const deleteHandler = async () => {
     setVisible(true)
     try {
-      const response = await deleteApi(_id);
+      const response = await deleteApi(token,_id);
       dispatch(deleteTodo(response._id));
     } catch (error) {
       console.log("error while delete a data", error);
