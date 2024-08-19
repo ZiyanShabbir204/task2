@@ -1,10 +1,14 @@
-import React, { useEffect, useState } from "react";
+import React, { Suspense, useEffect, useState } from "react";
 import { useDispatch, useSelector } from "react-redux";
 import DeleteModal from "../DeleteModal";
 
 import { useNavigate } from "react-router-dom";
 import { getAllUser, deleteAllUserApi } from "../../api/userApi";
-import { deleteAllUser, getUser, setLoader } from "../../store/slices/userSlice";
+import {
+  deleteAllUser,
+  getUser,
+  setLoader,
+} from "../../store/slices/userSlice";
 import User from "./User";
 import Spinner from "../Spinner";
 const Users = () => {
@@ -13,7 +17,7 @@ const Users = () => {
   const [visible, setVisible] = useState(false);
   const userData = useSelector((state) => state.user.users);
   const loader = useSelector((state) => state.user.loader);
-  const token = useSelector((state) => state.admin.token)
+  const token = useSelector((state) => state.admin.token);
   const deleteHandler = async () => {
     setVisible(false);
     try {
@@ -26,28 +30,20 @@ const Users = () => {
   };
   const dataHandler = async () => {
     const user = await getAllUser(token);
-    console.log(user,'user!!!!!!!!!!!');
-    
-    if(user.success){
+    console.log(user, "user!!!!!!!!!!!");
+
+    if (user.success) {
       dispatch(getUser(user.data));
-      dispatch(setLoader(false))
-
-    }
-    else{
+      dispatch(setLoader(false));
+    } else {
       dispatch(getUser([]));
-      
-
     }
-
-    
-   
   };
 
   useEffect(() => {
     dataHandler();
   }, []);
 
- 
   console.log("users", userData);
 
   return (
@@ -58,11 +54,9 @@ const Users = () => {
         setVisible={setVisible}
         deleteHandler={deleteHandler}
       />
-      <div
-        className="topbar"
-      >
+      <div className="topbar">
         <h1 style={{ textAlign: "center", color: "midnightblue" }}>Users</h1>
-        <div className="topbar-content" >
+        <div className="topbar-content">
           <button
             className="deleteAll-btn"
             onClick={() => navigate("/user/add")}
@@ -80,13 +74,19 @@ const Users = () => {
           </button>
         </div>
       </div>
-      {loader ? (
+      {userData.map((user) => (
+          <User {...user} key={user._id} />
+        ))}
+      {/* <Suspense fallback={ <Spinner/>} >
+        {userData.map((user) => (
+          <User {...user} key={user._id} />
+        ))}
+      </Suspense> */}
+      {/* {loader ? (
         <Spinner />
       ) : (
         userData.map((user) => <User {...user} key={user._id} />)
-      )}
-
-     
+      )} */}
     </div>
   );
 };

@@ -1,13 +1,15 @@
-import React from 'react'
-import Todos from './Todos'
-import { Outlet } from 'react-router-dom'
+import React,{ Suspense }  from 'react'
+
+import Spinner from '../Spinner';
+const Todos = React.lazy(() => import('./Todos'));
 
 const TodoWrapper = () => {
   return (
-    <div>
-        <Todos/>
-        <Outlet/>
-    </div>
+   
+    <Suspense fallback={<Spinner/>}>
+       <Todos/>
+    </Suspense>
+    
   )
 }
 

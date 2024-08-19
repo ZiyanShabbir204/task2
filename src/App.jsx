@@ -21,6 +21,9 @@ import { Navigate } from "react-router-dom";
 import NotFound from "./components/NotFound.jsx";
 import { useDispatch, useSelector } from "react-redux";
 import { setToken } from "./store/slices/adminSlice.jsx";
+import UsersWrapper from "./components/users/UsersWrapper.jsx";
+import ChangePassword from "./components/admin/ChangePassword.jsx";
+import UpdateProfile from "./components/admin/UpdateProfile.jsx";
 
 function App() {
   // const token = localStorage.getItem("token")
@@ -44,13 +47,18 @@ function App() {
         {
           path: "signup",
           element: <Signup />,
-        },
-        {
-          path:"*",
-          element:<NotFound/>
         }
+        // ,
+        // {
+        //   path:"*",
+        //   element:<NotFound/>
+        // }
       ],
     },
+    {
+      path: "*",
+      element:<NotFound/>
+    }
   ]);
 
   const router = createBrowserRouter([
@@ -72,7 +80,7 @@ function App() {
         // },
         {
           path: "todo",
-          element: <Todos />,
+          element: <TodoWrapper/>,
         },
         {
           path: "todo/add",
@@ -88,7 +96,7 @@ function App() {
         },
         {
           path: "user",
-          element: <Users />,
+          element: <UsersWrapper />,
         },
         {
           path: "user/edit/:_id",
@@ -102,9 +110,19 @@ function App() {
         {
           path: "user/add",
           element: <AddUser />,
-        },
+        },{
+        path : "admin/changepassword/:_id",
+        element : <ChangePassword/>
+        },{
+          path : "admin/updateprofile/:_id",
+        element : <UpdateProfile/>
+        }
       ],
     },
+    {
+      path:"*",
+      element:<NotFound/>
+    }
   ]);
 
   return (

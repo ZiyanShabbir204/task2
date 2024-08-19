@@ -66,10 +66,15 @@ const Todos = () => {
         </button>
 
         </div>
+      
+        
        
 
       </div>
-      {loader? <Spinner/> : todoData.map((todo) => (
+      {/* {loader? <Spinner/> : todoData.map((todo) => (
+        <Todo {...todo} key={todo._id} />
+      ))} */}
+        { todoData.map((todo) => (
         <Todo {...todo} key={todo._id} />
       ))}
 

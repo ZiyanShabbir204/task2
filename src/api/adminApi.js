@@ -1,4 +1,5 @@
 import axios from "axios";
+import { apiInstance } from "./config";
 
 export const signup = async (payload) => {
   try {
@@ -24,3 +25,22 @@ export const login = async (payload) => {
     return {error: error.response.data.message}
   }
 };
+
+export const changePassword = async(token,_id,payload)=>{
+  try {
+    const response = await apiInstance(token).put(`/admin/changepassword/${_id}`,payload)
+    return response.data;
+  } catch (error) {
+    return error
+    
+  }
+}
+export const updateProfile = async(token,_id,payload)=>{
+  try {
+    const response = await apiInstance(token).put(`/admin/updateprofile/${_id}`,payload)
+    return response.data;
+  } catch (error) {
+    return error
+    
+  }
+}
