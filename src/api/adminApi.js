@@ -16,7 +16,8 @@ export const login = async (payload) => {
   try {
     const response = await axios.post("/api/admin/login", payload);
     // console.log("token ",response.data.token)
-    // console.log("login response",response.data)
+    console.log("login response",response)
+
     return response.data
   } catch (error) {
     console.log("error",error.response)
@@ -42,5 +43,14 @@ export const updateProfile = async(token,_id,payload)=>{
   } catch (error) {
     return error
     
+  }
+}
+
+export const sendEmail = async (payload)=>{
+  try {
+    const response = await axios.post("/api/admin/sendemail",payload)
+    return response.data
+  } catch (error) {
+    return error
   }
 }

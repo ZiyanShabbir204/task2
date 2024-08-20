@@ -1,5 +1,5 @@
 import React, { useRef } from "react";
-import { signup } from "../../api/adminApi";
+import { sendEmail, signup } from "../../api/adminApi";
 import { useNavigate } from "react-router-dom";
 import { useDispatch } from "react-redux";
 import { setHeading, setToken } from "../../store/slices/adminSlice";
@@ -41,7 +41,12 @@ const Signup = () => {
         throw response.error;
       }
       console.log("signup Response", response);
-      alert(response.message);
+      const res = await sendEmail(payload)
+      if(!res.success){
+        alert(res.response.data.message)
+        return
+      }
+      alert(response.message + res.message);
       fullname.current.value = "";
       email.current.value = "";
       password.current.value = "";

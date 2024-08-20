@@ -9,14 +9,15 @@ import Modal from "react-awesome-modal";
 import { useNavigate } from "react-router-dom";
 
 const CustomModal = (props) => {
+
+  const routeDict = {User: "/user", Todo : "/todo" , Admin: "/" }
   const navigate = useNavigate();
   const closeModal = () => {
     props.setVisible(false);
     console.log("props.component", props.component);
-    {
-      props.value.success &&
-        (props.component == "User" ? navigate("/user") : navigate("/todo"));
-    }
+    props.value.success && navigate(routeDict[props.component])
+    
+    
   };
   return (
     <Modal
