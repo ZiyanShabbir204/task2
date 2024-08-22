@@ -34,14 +34,10 @@ const Signup = () => {
       email: email.current.value,
       password: password.current.value,
     };
-    try {
-      const response = await signup(payload);
-      if (response.error) {
-        console.log("response error", response.error);
-        throw response.error;
-      }
+    const response = await signup(payload);
+    if(response.success){
       console.log("signup Response", response);
-      const res = await sendEmail(payload)
+      const res = await sendEmail(response.data)
       if(!res.success){
         alert(res.response.data.message)
         return
@@ -52,12 +48,36 @@ const Signup = () => {
       password.current.value = "";
       confirmPassword.current.value = "";
       dispatch(setHeading("Login"))
+      navigate("/login");
+    }
+    else{
+      alert(response.response.data.message);
+
+    }
+    // try {
+    //   const response = await signup(payload);
+    //   if (response.error) {
+    //     console.log("response error", response.error);
+    //     throw response.error;
+    //   }
+    //   console.log("signup Response", response);
+    //   const res = await sendEmail(payload)
+    //   if(!res.success){
+    //     alert(res.response.data.message)
+    //     return
+    //   }
+    //   alert(response.message + res.message);
+    //   fullname.current.value = "";
+    //   email.current.value = "";
+    //   password.current.value = "";
+    //   confirmPassword.current.value = "";
+    //   dispatch(setHeading("Login"))
       
 
-      navigate("/login");
-    } catch (error) {
-      alert(error);
-    }
+    //   navigate("/login");
+    // } catch (error) {
+    //   alert(error);
+    // }
   };
   const textHandler = ()=>{
     dispatch(setHeading("Login"))

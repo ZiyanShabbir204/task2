@@ -26,26 +26,45 @@ React.useEffect(()=>{
       email: email.current.value,
       password: password.current.value,
     };
-    try {
-      const response = await login(payload);
-      if (response.error) {
-        throw "incorrect email or password";
-      }
-      console.log("before local storage", response.data.token);
+    const response = await login(payload);
+    if(response.success){
       localStorage.setItem("token", response.data.token);
-      console.log("after local storage", localStorage.getItem("token"));
       dispatch(setToken(localStorage.getItem("token")));
-
-      // console.log("login Response", response);?
       alert(response.message);
       email.current.value = "";
       password.current.value = "";
       dispatch(setHeading("Dashboard"));
-
       navigate("/");
-    } catch (error) {
-      alert(error);
+
     }
+    else{
+      alert(response.response.data.message);
+
+    }
+
+
+    // try {
+    //   const response = await login(payload);
+    //   console.log("response data",response)
+    //   // if (response.error) {
+    //   //   throw "incorrect email or password";
+    //   // }
+    //   // console.log("before local storage", response.data.token);
+    //   localStorage.setItem("token", response.data.token);
+    //   // console.log("after local storage", localStorage.getItem("token"));
+    //   dispatch(setToken(localStorage.getItem("token")));
+
+    //   // console.log("login Response", response);?
+    //   alert(response.message);
+    //   email.current.value = "";
+    //   password.current.value = "";
+    //   dispatch(setHeading("Dashboard"));
+
+    //   navigate("/");
+    // } catch (error) {
+    //   console.log("error in Login page",error)
+    //   alert(response.response.data.message);
+    // }
   };
 
   const textHandler = () => {

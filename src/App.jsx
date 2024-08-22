@@ -1,12 +1,5 @@
-import { useEffect, useState } from "react";
-
-import Todos from "./components/todos/Todos";
-import Users from "./components/users/Users";
-
 import "./App.css";
 import AddTodo from "./components/todos/AddTodo";
-
-import Navbar from "./components/Navbar";
 import { createBrowserRouter, RouterProvider } from "react-router-dom";
 import InfoTodo from "./components/todos/InfoTodo";
 import TodoWrapper from "./components/todos/TodoWrapper";
@@ -20,10 +13,10 @@ import Login from "./components/admin/Login.jsx";
 import { Navigate } from "react-router-dom";
 import NotFound from "./components/NotFound.jsx";
 import { useDispatch, useSelector } from "react-redux";
-import { setToken } from "./store/slices/adminSlice.jsx";
 import UsersWrapper from "./components/users/UsersWrapper.jsx";
 import ChangePassword from "./components/admin/ChangePassword.jsx";
 import UpdateProfile from "./components/admin/UpdateProfile.jsx";
+import VerifyEmail from "./components/admin/VerifyEmail.jsx";
 
 function App() {
   // const token = localStorage.getItem("token")
@@ -54,6 +47,10 @@ function App() {
         //   element:<NotFound/>
         // }
       ],
+    },
+    {
+      path:"/verifyemail/:_id",
+      element:<VerifyEmail/>
     },
     {
       path: "*",
